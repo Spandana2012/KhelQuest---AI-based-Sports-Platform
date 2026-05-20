@@ -2,6 +2,9 @@
 
 KhelQuest is a React and TypeScript sports talent platform built with Vite. It helps athletes create a profile, choose sports, track training progress, upload achievements, view rankings, and run exercise analysis flows for pushups, squats, and high jumps.
 
+**#Live At vercel**
+https://khelquest-frontend.vercel.app
+
 ## Features
 
 - Athlete onboarding and profile creation
