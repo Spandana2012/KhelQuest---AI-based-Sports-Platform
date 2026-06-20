@@ -87,16 +87,16 @@ KhelQuest is currently a frontend prototype. Authentication, athlete profiles, r
 
 ## Project Documents
 
-PDF versions open directly in GitHub. The editable source files can be downloaded and opened in Microsoft Word or PowerPoint.
+These PDF versions open directly in GitHub.
 
-| Document | GitHub preview | Editable source |
-| --- | --- | --- |
-| Project abstract | — | [Word document](Abstract.doc) |
-| Mini Project Review 1 | [PDF](Mini%20Project%20Review-1.pdf) | [PowerPoint](Mini%20Project%20Review-1.pptx) |
-| Mini Project Review 2 | [PDF](Mini%20Project%20Review-2.pdf) | [PowerPoint](Mini%20Project%20Review-2.pptx) |
-| Mini Project Review SEE | [PDF](Mini%20project%20Review%20template%20SEE.pdf) | [PowerPoint](Mini%20project%20Review%20template%20SEE.pptx) |
-| Mini-project report | [PDF](KhelQuest_Miniproject_H10_Report.pdf) | — |
-| Research paper | [PDF](KHELQUEST_RESEARCH_PAPER.pdf) | — |
+| Document | GitHub preview |
+| --- | --- |
+| Project abstract | [PDF](Abstract.pdf) |
+| Mini Project Review 1 | [PDF](Mini%20Project%20Review-1.pdf) |
+| Mini Project Review 2 | [PDF](Mini%20Project%20Review-2.pdf) |
+| Mini Project Review SEE | [PDF](Mini%20project%20Review%20template%20SEE.pdf) |
+| Mini-project report | [PDF](KhelQuest_Miniproject_H10_Report.pdf) |
+| Research paper | [PDF](KHELQUEST_RESEARCH_PAPER.pdf) |
 
 ## Repository
 
