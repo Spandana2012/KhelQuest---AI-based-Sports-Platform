@@ -1,79 +1,90 @@
-# KhelQuest
+# KhelQuest — AI-Based Sports Platform
 
-KhelQuest is a React and TypeScript sports talent platform built with Vite. It helps athletes create a profile, choose sports, track training progress, upload achievements, view rankings, and run exercise analysis flows for pushups, squats, and high jumps.
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-000000?logo=vercel)](https://khelquest-frontend.vercel.app/)
+[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white)](https://vite.dev/)
+
+KhelQuest is a responsive sports-talent discovery and training platform. Athletes can build profiles, explore sports opportunities, track progress, and analyse push-ups, squats, and high jumps using browser-based pose detection.
+
+## Live at Vercel
+
+**[Open KhelQuest](https://khelquest-frontend.vercel.app/)**
 
 **#Live At vercel**
 https://khelquest-frontend.vercel.app
 
 ## Features
 
-- Athlete onboarding and profile creation
-- Sport selection across team, individual, and strength categories
-- Dashboard with progress metrics, targets, badges, and milestone tracking
-- Exercise runners for pushups, squats, and high jump analysis
-- Achievement uploads, feedback, rankings, and local board sections
-- Responsive interface built with Tailwind CSS and Lucide icons
+- Athlete onboarding, sport selection, and profile creation
+- Live-camera and uploaded-video exercise analysis
+- MediaPipe pose tracking for push-ups, squats, and high jumps
+- Training plans, daily targets, weekly progress, and achievement badges
+- Athlete rankings and performance milestones
+- Achievement uploads and athlete feedback
+- Finder for athletes, coaches, and nearby sports venues
+- Local sports board and SAI-focused opportunity views
+- Responsive navigation and layouts for desktop and mobile
 
 ## Tech Stack
 
-- React 18
-- TypeScript
-- Vite
-- Tailwind CSS
-- MediaPipe Pose
-- Supabase client
-- Lucide React
+- **Frontend:** React 18, TypeScript, Vite
+- **Styling:** Tailwind CSS
+- **Pose analysis:** MediaPipe Pose
+- **Icons:** Lucide React
+- **Deployment:** Vercel
 
 ## Project Structure
 
 ```text
 KhelQuest/
-  khelquest-frontend/
-    src/
-      components/
-      main.tsx
-      App.tsx
-    package.json
-    vite.config.ts
-    tailwind.config.js
+├── khelquest-frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── counters/
+│   │   │   └── utils/
+│   │   ├── App.tsx
+│   │   ├── index.css
+│   │   └── main.tsx
+│   ├── package.json
+│   ├── tailwind.config.js
+│   └── vite.config.ts
+└── README.md
 ```
 
-## Getting Started
+## Run Locally
 
 ### Prerequisites
 
 - Node.js 18 or newer
 - npm
 
-### Installation
+### Setup
 
 ```bash
-cd khelquest-frontend
+git clone https://github.com/Spandana2012/KhelQuest---AI-based-Sports-Platform.git
+cd KhelQuest---AI-based-Sports-Platform/khelquest-frontend
 npm install
-```
-
-### Development
-
-```bash
 npm run dev
 ```
 
-### Build
+Open the local URL displayed by Vite. Camera-based analysis requires browser camera permission; uploaded-video analysis can be used without it.
 
-```bash
-npm run build
-```
+## Available Scripts
 
-### Preview Production Build
+Run these commands from `khelquest-frontend/`:
 
-```bash
-npm run preview
-```
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the development server |
+| `npm run build` | Create a production build |
+| `npm run lint` | Run ESLint checks |
+| `npm run preview` | Preview the production build locally |
 
-## Environment Variables
+## Current Project Status
 
-Create a local `.env` file inside `khelquest-frontend/` if the app needs environment-specific values. Do not commit `.env` files.
+KhelQuest is currently a frontend prototype. Authentication, athlete profiles, rankings, bookings, messages, and several dashboard values use mock or client-side data. A production release would require persistent backend services, secure authentication, storage, and server-side validation.
 
-## Notes
+## Repository
 
-The app currently uses mock and client-side data in several sections. Connect the flows to backend services as needed for production authentication, persistent athlete profiles, rankings, and uploaded achievements.
+[Spandana2012/KhelQuest---AI-based-Sports-Platform](https://github.com/Spandana2012/KhelQuest---AI-based-Sports-Platform)
