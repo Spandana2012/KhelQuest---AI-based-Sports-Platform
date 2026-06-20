@@ -85,6 +85,19 @@ Run these commands from `khelquest-frontend/`:
 
 KhelQuest is currently a frontend prototype. Authentication, athlete profiles, rankings, bookings, messages, and several dashboard values use mock or client-side data. A production release would require persistent backend services, secure authentication, storage, and server-side validation.
 
+## Project Documents
+
+PDF versions open directly in GitHub. The editable source files can be downloaded and opened in Microsoft Word or PowerPoint.
+
+| Document | GitHub preview | Editable source |
+| --- | --- | --- |
+| Project abstract | — | [Word document](Abstract.doc) |
+| Mini Project Review 1 | [PDF](Mini%20Project%20Review-1.pdf) | [PowerPoint](Mini%20Project%20Review-1.pptx) |
+| Mini Project Review 2 | [PDF](Mini%20Project%20Review-2.pdf) | [PowerPoint](Mini%20Project%20Review-2.pptx) |
+| Mini Project Review SEE | [PDF](Mini%20project%20Review%20template%20SEE.pdf) | [PowerPoint](Mini%20project%20Review%20template%20SEE.pptx) |
+| Mini-project report | [PDF](KhelQuest_Miniproject_H10_Report.pdf) | — |
+| Research paper | [PDF](KHELQUEST_RESEARCH_PAPER.pdf) | — |
+
 ## Repository
 
 [Spandana2012/KhelQuest---AI-based-Sports-Platform](https://github.com/Spandana2012/KhelQuest---AI-based-Sports-Platform)
