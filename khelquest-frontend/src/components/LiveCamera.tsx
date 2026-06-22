@@ -1,80 +1,115 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Pose } from "@mediapipe/pose";
-import { Camera } from "@mediapipe/camera_utils";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { drawPose } from "./utils/drawPose";
+import {
+  createCamera,
+  createPose,
+  type MediaPipeCamera,
+  type MediaPipePose,
+} from "./utils/mediaPipe";
 
 import PushupCounter, { resetPushupCounter } from "./counters/PushupCounter";
 import SquatCounter, { resetSquatCounter } from "./counters/SquatCounter";
 import HighJumpAnalyzer, { resetHighJumpAnalyzer } from "./counters/HighJumpAnalyzer";
 
-const LiveCamera = ({ exercise, onFinish, onBack }: any) => {
+interface LiveCameraProps {
+  exercise: "pushup" | "squat" | "highjump";
+  onFinish: (result: {
+    exercise: string;
+    value: number;
+    timestamp: string;
+  }) => void;
+  onBack: () => void;
+}
+
+const LiveCamera = ({ exercise, onFinish, onBack }: LiveCameraProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const cameraRef = useRef<Camera | null>(null);
+  const cameraRef = useRef<MediaPipeCamera | null>(null);
+  const poseRef = useRef<MediaPipePose | null>(null);
 
   const [value, setValue] = useState(0);
+  const [status, setStatus] = useState("Loading pose detector…");
+  const [error, setError] = useState("");
   const latestValueRef = useRef(0);
 
-  useEffect(() => {
-    if (!videoRef.current || !canvasRef.current) return;
-
-    if (exercise === "pushup") resetPushupCounter();
-    if (exercise === "squat") resetSquatCounter();
-    if (exercise === "highjump") resetHighJumpAnalyzer();
-
-    setValue(0);
-    latestValueRef.current = 0;
-
-    const ctx = canvasRef.current.getContext("2d")!;
-
-    const pose = new Pose({
-      locateFile: (f) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${f}`,
-    });
-
-    pose.setOptions({
-      modelComplexity: 2,
-      smoothLandmarks: true,
-      minDetectionConfidence: 0.5,
-      minTrackingConfidence: 0.5,
-      selfieMode: false,
-    });
-
-    pose.onResults((results) => {
-      drawPose(ctx, results);
-
-      const handler = ({ value, finished }: any) => {
-        setValue(value);
-        latestValueRef.current = value;
-
-        if (finished) finish(value);
-      };
-
-      if (exercise === "pushup") PushupCounter(results, handler);
-      if (exercise === "squat") SquatCounter(results, handler);
-      if (exercise === "highjump") HighJumpAnalyzer(results, handler);
-    });
-
-    cameraRef.current = new Camera(videoRef.current, {
-      onFrame: async () => {
-        await pose.send({ image: videoRef.current! });
-      },
-      width: 720,
-      height: 480,
-    });
-
-    cameraRef.current.start();
-
-    return () => cameraRef.current?.stop();
-  }, [exercise]);
-
-  const finish = (finalValue: number) => {
+  const finish = useCallback((finalValue: number) => {
     cameraRef.current?.stop();
     onFinish({
       exercise,
       value: finalValue,
       timestamp: new Date().toISOString(),
     });
-  };
+  }, [exercise, onFinish]);
+
+  useEffect(() => {
+    if (!videoRef.current || !canvasRef.current) return;
+
+    let cancelled = false;
+
+    if (exercise === "pushup") resetPushupCounter();
+    if (exercise === "squat") resetSquatCounter();
+    if (exercise === "highjump") resetHighJumpAnalyzer();
+
+    setValue(0);
+    setError("");
+    setStatus("Loading pose detector…");
+    latestValueRef.current = 0;
+
+    const ctx = canvasRef.current.getContext("2d")!;
+
+    const initialize = async () => {
+      try {
+        const pose = await createPose(2);
+        if (cancelled) {
+          await pose.close();
+          return;
+        }
+
+        poseRef.current = pose;
+        pose.onResults((results) => {
+          if (cancelled) return;
+          drawPose(ctx, results);
+
+          const handler = ({ value, finished }: { value: number; finished: boolean }) => {
+            setValue(value);
+            latestValueRef.current = value;
+            if (finished) finish(value);
+          };
+
+          if (exercise === "pushup") PushupCounter(results, handler);
+          if (exercise === "squat") SquatCounter(results, handler);
+          if (exercise === "highjump") HighJumpAnalyzer(results, handler);
+        });
+
+        const camera = createCamera(videoRef.current!, async () => {
+          await pose.send({ image: videoRef.current! });
+        });
+        cameraRef.current = camera;
+        await camera.start();
+
+        if (!cancelled) setStatus("Camera active — keep your full body visible");
+      } catch (caught) {
+        if (cancelled) return;
+        const message = caught instanceof Error ? caught.message : "Unknown camera error";
+        setError(
+          message.includes("Permission") || message.includes("NotAllowed")
+            ? "Camera permission was denied. Allow camera access and try again."
+            : `Could not start pose detection: ${message}`,
+        );
+        setStatus("");
+      }
+    };
+
+    void initialize();
+
+    return () => {
+      cancelled = true;
+      cameraRef.current?.stop();
+      cameraRef.current = null;
+      void poseRef.current?.close();
+      poseRef.current = null;
+    };
+  }, [exercise, finish]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-black px-4">
@@ -124,6 +159,13 @@ const LiveCamera = ({ exercise, onFinish, onBack }: any) => {
             STOP
           </button>
         </div>
+
+        {status && <p className="text-sm text-blue-200">{status}</p>}
+        {error && (
+          <div className="w-full rounded-lg bg-red-500/20 px-4 py-3 text-center text-red-100">
+            {error}
+          </div>
+        )}
       </div>
     </div>
   );
